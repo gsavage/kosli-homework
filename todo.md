@@ -21,7 +21,7 @@ There are many ways to serve websites on AWS. Your goal is to do research and pi
 
 # ToDo List
 - [ ] Add a readme and a project "diary"
-- [ ] Manually create the bootstrapping infra - IAM role/policy, and an S3 bucket
+- [x] Manually create the bootstrapping infra - IAM role/policy, and an S3 bucket
 - [ ] Decide the names of a couple of workspaces
 - [ ] Simulate having multiple AWS Account IDs - same account id, but make it a parameter...
 - [ ] Create the bucket for holding the static content
