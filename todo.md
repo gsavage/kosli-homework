@@ -19,6 +19,15 @@ There are many ways to serve websites on AWS. Your goal is to do research and pi
 - [ ] Multiple AWS _accounts_ for example dev and prod
 - [ ] Instructions mention ssh key - is this necessary?
 
+# ToDo List
+- [ ] Add a readme and a project "diary"
+- [ ] Manually create the bootstrapping infra - IAM role/policy, and an S3 bucket
+- [ ] Decide the names of a couple of workspaces
+- [ ] Simulate having multiple AWS Account IDs - same account id, but make it a parameter...
+- [ ] Create the bucket for holding the static content
+- [ ] Create some static content
+
+
 # Thoughts
 * Assuming the site is static, use S3 with Cloudfront as one option
 * Github pages is another - demonstrates using a SaaS TF provider
