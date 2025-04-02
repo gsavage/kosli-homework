@@ -1,0 +1,5 @@
+.docker-built
+.*swp
+plan.txt
+.init
+.planned
