@@ -4,10 +4,10 @@
     {
       "Effect": "Allow",
       "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::example-bucket",
+      "Resource": "arn:aws:s3:::BUCKET_NAME",
       "Condition": {
         "StringEquals": {
-          "s3:prefix": "path/to/state"
+          "s3:prefix": "kosli/"
         }
       }
     },
@@ -15,14 +15,14 @@
       "Effect": "Allow",
       "Action": ["s3:GetObject", "s3:PutObject"],
       "Resource": [
-        "arn:aws:s3:::example-bucket/myapp/production/tfstate",
+        "arn:aws:s3:::BUCKET_NAME/kosli/*/tfstate"
       ]
     },
     {
       "Effect": "Allow",
       "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
       "Resource": [
-        "arn:aws:s3:::example-bucket/myapp/production/tfstate.tflock"
+        "arn:aws:s3:::BUCKET_NAME/kosli/*/tfstate.tflock"
       ]
     }
   ]

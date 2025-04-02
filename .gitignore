@@ -4,3 +4,4 @@ plan.txt
 .init
 .planned
 .env
+bootstrap/tf-iam.policy.json
