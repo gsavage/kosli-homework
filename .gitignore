@@ -5,3 +5,4 @@ plan.txt
 .planned
 .env
 bootstrap/tf-iam.policy.json
+.terraform
