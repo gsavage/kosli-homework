@@ -35,7 +35,7 @@ backend.tf: backend.tf.template
 apply: workspace plan.txt
 	terraform apply -var-file=vars/$(KOSLI_ENV).tfvars plan.txt
 
-plan.txt: *.tf
+plan.txt: *.tf website/*
 	terraform plan -var-file=vars/$(KOSLI_ENV).tfvars -out plan.txt
 
 workspace:
