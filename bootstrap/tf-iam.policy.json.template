@@ -24,6 +24,18 @@
       "Resource": [
         "arn:aws:s3:::BUCKET_NAME/kosli/*/tfstate.tflock"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:CreateBucket",
+        "s3:PutObject",
+        "s3:DeleteObject"],
+      "Resource": [
+        "arn:aws:s3:::gsavage-kosli-static-site-*",
+        "arn:aws:s3:::gsavage-kosli-static-site-*/*"
+      ]
     }
   ]
 }
