@@ -6,3 +6,4 @@ plan.txt
 .env
 bootstrap/tf-iam.policy.json
 .terraform
+.DS_Store
