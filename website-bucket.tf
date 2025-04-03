@@ -1,3 +1,3 @@
 resource "aws_s3_bucket" "static_site" {
-  bucket = "gsavage-kosli-static-site"
+  bucket = "gsavage-kosli-static-site-${var.env}"
 } 
