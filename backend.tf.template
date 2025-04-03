@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = ""
+    bucket = "BUCKET_NAME"
     key    = "kosli/state"
     region = "eu-west-2"
   }
