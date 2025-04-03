@@ -21,9 +21,9 @@ clean:
 # These targets are to be used within the dev container - they are wrappers around Terraform
 # commands.  Note that several of these will run `terraform init` for me, if needed.
 
-.PHONY: plan workspace
+.PHONY: plan apply workspace
 
-plan: .init plan.txt
+plan: .init workspace plan.txt
 
 .init: backend.tf providers.tf
 	terraform init
@@ -32,13 +32,15 @@ plan: .init plan.txt
 backend.tf: backend.tf.template
 	sed -e "s/BUCKET_NAME/${BUCKET_NAME}/" $< > $@
 
-plan.txt: workspace *.tf
-	terraform plan -out plan.txt
+apply: workspace plan.txt
+	terraform apply -var-file=vars/$(KOSLI_ENV).tfvars plan.txt
+
+plan.txt: *.tf
+	terraform plan -var-file=vars/$(KOSLI_ENV).tfvars -out plan.txt
 
 workspace:
-	terraform workspace select -or-create dev
+	terraform workspace select -or-create $(KOSLI_ENV)
 
 tfclean:
-	rm -f .init plan.txt
+	rm -f plan.txt
 
-  
