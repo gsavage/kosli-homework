@@ -21,7 +21,7 @@ clean:
 # These targets are to be used within the dev container - they are wrappers around Terraform
 # commands.  Note that several of these will run `terraform init` for me, if needed.
 
-.PHONY: plan apply workspace
+.PHONY: plan apply workspace fmt validate
 
 plan: .init workspace plan.txt
 
@@ -40,6 +40,12 @@ plan.txt: *.tf website/*
 
 workspace:
 	terraform workspace select -or-create $(KOSLI_ENV)
+
+fmt:
+	terraform fmt
+
+validate:
+	terraform validate
 
 tfclean:
 	rm -f plan.txt
