@@ -12,20 +12,20 @@ There are many ways to serve websites on AWS. Your goal is to do research and pi
 * CI setup is optional.
 
 # Items to address
-- [ ] Decide on the two mechanisms to be used for hosting a site on AWS
+- [x] Decide on the two mechanisms to be used for hosting a site on AWS
 - [ ] Determine what components are needed
-- [ ] Decide whether to use two repos (one per mechanism)
+- [x] Decide whether to use two repos (one per mechanism)
 - [ ] Setup DNS (Do I have a suitable domain I could repurpose for this?)
 - [ ] Multiple AWS _accounts_ for example dev and prod
-- [ ] Instructions mention ssh key - is this necessary?
+- [x] Instructions mention ssh key - is this necessary?
 
 # ToDo List
 - [ ] Add a readme and a project "diary"
 - [x] Manually create the bootstrapping infra - IAM role/policy, and an S3 bucket
-- [ ] Decide the names of a couple of workspaces
+- [x] Decide the names of a couple of workspaces
 - [ ] Simulate having multiple AWS Account IDs - same account id, but make it a parameter...
-- [ ] Create the bucket for holding the static content
-- [ ] Create some static content
+- [x] Create the bucket for holding the static content
+- [x] Create some static content
 
 
 # Thoughts
