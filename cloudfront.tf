@@ -19,6 +19,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   enabled = true
 
+  aliases = ["${var.env}-kosli-cf.${var.personal_domain}"]
+
   is_ipv6_enabled     = false
   default_root_object = "index.html"
   default_cache_behavior {
@@ -47,6 +49,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn = var.wildcard_acm_cert
+
+    ssl_support_method = "sni-only"
+
   }
 }
