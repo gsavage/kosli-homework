@@ -12,3 +12,8 @@ variable "aws_profile" {
   description = "The name of the local AWS profile (from ~/.aws/config)"
   type        = string
 }
+
+variable "aws_account" {
+  description = "The AWS account id - numeric string"
+  type        = string
+}
