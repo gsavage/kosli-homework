@@ -13,19 +13,19 @@ There are many ways to serve websites on AWS. Your goal is to do research and pi
 
 # Items to address
 - [x] Decide on the two mechanisms to be used for hosting a site on AWS
-- [ ] Determine what components are needed
+- [x] Determine what components are needed
 - [x] Decide whether to use two repos (one per mechanism)
-- [ ] Setup DNS (Do I have a suitable domain I could repurpose for this?)
-- [ ] Multiple AWS _accounts_ for example dev and prod
+- [x] Setup DNS (Do I have a suitable domain I could repurpose for this?)
+- [x] Multiple AWS _accounts_ for example dev and prod
 - [x] Instructions mention ssh key - is this necessary?
 
 # ToDo List
-- [ ] Add a readme and a project "diary"
 - [x] Manually create the bootstrapping infra - IAM role/policy, and an S3 bucket
 - [x] Decide the names of a couple of workspaces
-- [ ] Simulate having multiple AWS Account IDs - same account id, but make it a parameter...
+- [x] Simulate having multiple AWS Account IDs - same account id, but make it a parameter...
 - [x] Create the bucket for holding the static content
 - [x] Create some static content
+- [ ] Build the ECS stack - cluster, service, task-definition, alb
 
 
 # Thoughts
