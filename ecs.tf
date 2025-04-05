@@ -7,13 +7,19 @@ resource "aws_iam_role" "allow_ecs_access" {
   assume_role_policy = data.aws_iam_policy_document.allow_ecs_access.json
 }
 
+resource "aws_iam_role_policy_attachment" "attach_managed_ecs_policy" {
+  role       = aws_iam_role.allow_ecs_access.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
 data "aws_iam_policy_document" "allow_ecs_access" {
   statement {
     principals {
       type        = "Service"
-      identifiers = ["ecs.amazonaws.com"]
+      identifiers = ["ecs-tasks.amazonaws.com"]
     }
     actions = ["sts:AssumeRole"]
+    effect  = "Allow"
   }
 }
 
