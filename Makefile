@@ -50,3 +50,16 @@ validate:
 tfclean:
 	rm -f plan.txt
 
+
+# These targets are used for building the application
+
+.PHONY: buildapp pushapp
+
+buildapp:
+	docker build -f Dockerfile.app -t app .
+
+pushapp:
+	docker tag dev 359024362939.dkr.ecr.eu-west-2.amazonaws.com/kosli-site:app
+	docker run  --mount type=bind,src=${HOME}/.aws,dst=/home/dev/.aws  --env-file=.env dev 'aws' ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 359024362939.dkr.ecr.eu-west-2.amazonaws.com
+	docker push 359024362939.dkr.ecr.eu-west-2.amazonaws.com/kosli-site:app
+
