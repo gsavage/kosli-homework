@@ -1,0 +1,24 @@
+# These targets are to be run on the host computer, and build the dev
+# container.
+# 
+# running `make bash` will run a Docker build as necessary, and jump
+# into a bash shell as the "dev" user.
+# 
+# The targets here assume the are being run in the root 
+# of the project, and so paths are relative not to this
+# directory, but the root
+#
+
+.PHONY: bash build clean
+bash: build
+	docker run --mount type=bind,src=$(HOME)/.aws,dst=/home/dev/.aws --mount type=bind,src=.,dst=/code --env-file=.env -it dev
+
+build: .docker-built
+
+.docker-built: Dockerfile
+	docker build -f Dockerfile -t dev .
+	touch .docker-built
+
+clean:
+	rm -f .docker-built
+

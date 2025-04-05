@@ -1,0 +1,36 @@
+# These targets are to be used within the dev container - they are wrappers around Terraform
+# commands.
+# 
+# The targets here assume the are being run in the root 
+# of the project, and so paths are relative not to this
+# directory, but the root
+
+.PHONY: plan apply workspace fmt validate
+
+plan: .init workspace plan.txt
+
+.init: backend.tf providers.tf
+	terraform init
+	touch .init
+
+backend.tf: backend.tf.template
+	sed -e "s/BUCKET_NAME/${BUCKET_NAME}/" $< > $@
+
+apply: workspace plan.txt
+	terraform apply -var-file=vars/$(KOSLI_ENV).tfvars plan.txt
+
+plan.txt: *.tf website/*
+	terraform plan -var-file=vars/$(KOSLI_ENV).tfvars -out plan.txt
+
+workspace:
+	terraform workspace select -or-create $(KOSLI_ENV)
+
+fmt:
+	terraform fmt
+
+validate:
+	terraform validate
+
+tfclean:
+	rm -f plan.txt
+
