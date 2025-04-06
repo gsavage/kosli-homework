@@ -73,6 +73,10 @@ resource "aws_ecs_task_definition" "app_task" {
           containerPort = 80
           hostPort      = 80
       }]
+      healthCheck = {
+        command     = ["CMD-SHELL", "curl -f http://127.0.0.1/ || exit 1"]
+        startPeriod = 20
+      }
     }
   ])
 
@@ -91,10 +95,15 @@ resource "aws_ecs_service" "nginx_service" {
   name            = "kosli-${var.env}-nginx-service"
   cluster         = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.app_task.arn
-  desired_count   = 0
+  desired_count   = 1
   launch_type     = "FARGATE"
   network_configuration {
     subnets = [aws_subnet.a.id, aws_subnet.b.id]
+  }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.target_group_ip.arn
+    container_name   = "kosli_app"
+    container_port   = 80
   }
 
 }
