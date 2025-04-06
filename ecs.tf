@@ -12,6 +12,16 @@ resource "aws_iam_role_policy_attachment" "attach_managed_ecs_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+resource "aws_iam_role_policy_attachment" "attach_task_policy" {
+  role       = aws_iam_role.allow_ecs_access.name
+  policy_arn = aws_iam_policy.app_policy.arn
+}
+
+resource "aws_iam_policy" "app_policy" {
+  name   = "${var.env}-app-policy"
+  policy = data.aws_iam_policy_document.task_actions.json
+}
+
 data "aws_iam_policy_document" "allow_ecs_access" {
   statement {
     principals {
@@ -20,6 +30,19 @@ data "aws_iam_policy_document" "allow_ecs_access" {
     }
     actions = ["sts:AssumeRole"]
     effect  = "Allow"
+  }
+}
+
+data "aws_iam_policy_document" "task_actions" {
+  statement {
+    effect    = "Allow"
+    actions   = ["ecr:GetAuthorizationToken", "ecr:BatchCheckLayerAvailability", "ecr:GetDownloadUrlForLayer", "ecr:BatchGetImage"]
+    resources = ["arn:aws:ecr:eu-west-2:359024362939:repository/*"]
+  }
+  statement {
+    effect    = "Allow"
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["arn:aws:logs:eu-west-2:359024362939:log-group:dev-app-logs:**"]
   }
 }
 
@@ -37,6 +60,14 @@ resource "aws_ecs_task_definition" "app_task" {
       cpu       = 256
       memory    = 512
       essential = true
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-region        = "eu-west-2"
+          awslogs-group         = aws_cloudwatch_log_group.app_logs.name
+          awslogs-stream-prefix = "app-nginx"
+        }
+      }
       portMappings = [
         {
           containerPort = 80
@@ -49,6 +80,11 @@ resource "aws_ecs_task_definition" "app_task" {
     operating_system_family = "LINUX"
   }
 
+}
+
+resource "aws_cloudwatch_log_group" "app_logs" {
+  name              = "${var.env}-app-logs"
+  retention_in_days = 3 # I don't need a lot of logs for testing this app
 }
 
 resource "aws_ecs_service" "nginx_service" {
