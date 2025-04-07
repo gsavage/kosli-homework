@@ -47,3 +47,37 @@ graph TD;
     T --runs--> I[Container Image];
     H[Source Files] --built into --> I;
 ```
+
+## Points of interest
+
+I'm very aware of the need to implement good security practises.  I've chosen to run the ECS
+task in private subnets, I'm avoiding using the VPC Default security group.  I've used a private
+S3 bucket with a restrictive policy.  All of these choices slowed down the implementation,
+but this sort of thing, protecting our IP, is something that I feel very strongly about.
+
+I haven't implemented them in Terraform here, but this account is my personal account and I do
+have billing alerts setup. Please don't run siege or ab against these endpoints!  
+
+## Further Work
+
+There are a number of opportunities to improve these implementations.
+
+* Remove the upload HTML step from Terraform - deploying a website, to my mind, is an 
+  operation that should be performed by a CI/CD tool outside of the Terraform code.
+  I could imagine wanting to compile the HTML files using a tool like Jekyll and running
+  that in a pipeline doesn't smell like it belongs here
+
+* This repo contains two different mechanisms for serving a website.  I would prefer to 
+  split them out into separate repositories; perhaps one for the Cloudfront, one for the ECS,
+  one for the ECS _service_, and yet another for the HTML.  For the purposes of the homework
+  assignment, that felt like overkill.
+
+* I haven't implemented any monitoring or alerting.  I'm aware this wasn't mentioned in the
+  requirements, so perhaps it's not something that if of interest, but I'm calling out that
+  if this proof-of-concept went any further, or was available to real users, I would most
+  definitely implement monitoring and alerting within Cloudwatch.
+
+* I do not have a WAF in front of either the ALB or Cloudfront, again, this was for
+  simplicity and to not stretch the brief too far.  There's no way I would put this into
+  real production without those protections.
+
