@@ -4,6 +4,8 @@ resource "aws_s3_bucket" "static_site" {
   bucket = "gsavage-kosli-static-site-${var.env}"
 }
 
+# The policy for the bucket only allows Get object from the bucket via 
+# Cloudfront and the Cloudfront OAI.
 resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
   bucket = aws_s3_bucket.static_site.id
   policy = data.aws_iam_policy_document.allow_access_from_cloudfront.json

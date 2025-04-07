@@ -1,7 +1,8 @@
 terraform {
   backend "s3" {
-    bucket = "BUCKET_NAME"
-    key    = "kosli/state"
-    region = "eu-west-2"
+    bucket  = "BUCKET_NAME"
+    key     = "kosli/state"
+    region  = "eu-west-2"
+    profile = "kosli"
   }
 }

@@ -7,7 +7,6 @@ resource "aws_cloudfront_origin_access_identity" "website_origin_access" {
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
-  count = 1
   origin {
     domain_name = aws_s3_bucket.static_site.bucket_regional_domain_name
     origin_id   = local.s3_origin_id
@@ -23,6 +22,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   is_ipv6_enabled     = false
   default_root_object = "index.html"
+
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
@@ -49,9 +49,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = var.wildcard_acm_cert
-
-    ssl_support_method = "sni-only"
-
+    acm_certificate_arn = var.wildcard_acm_cert_global
+    ssl_support_method  = "sni-only"
   }
 }
