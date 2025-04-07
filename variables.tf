@@ -24,6 +24,12 @@ variable "wildcard_acm_cert" {
   default     = "arn:aws:acm:us-east-1:359024362939:certificate/f362f432-83e1-4427-91a6-2a1e484af485"
 }
 
+variable "wildcard_acm_cert_eu_west_2" {
+  description = "Wildcard TLS cert for the grahamandsarah.com domain"
+  type        = string
+  default     = "arn:aws:acm:eu-west-2:359024362939:certificate/4df3c09c-2065-4ed6-ad56-b730e9292641"
+}
+
 variable "personal_domain" {
   description = "The domain on which I'll be hosting the two websites"
   type        = string

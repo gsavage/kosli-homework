@@ -5,12 +5,26 @@ resource "aws_security_group" "lb_sg" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "ingress" {
+resource "aws_vpc_security_group_ingress_rule" "ingress80" {
   security_group_id = aws_security_group.lb_sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 80
   to_port           = 80
   ip_protocol       = "tcp"
+  tags = {
+    Name = "${var.env}-ingress-port80"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "ingress443" {
+  security_group_id = aws_security_group.lb_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 443
+  to_port           = 443
+  ip_protocol       = "tcp"
+  tags = {
+    Name = "${var.env}-ingress-port443"
+  }
 }
 
 resource "aws_vpc_security_group_egress_rule" "egress" {
@@ -50,6 +64,18 @@ resource "aws_lb_listener" "listener_http" {
   load_balancer_arn = aws_lb.load_balancer.arn
   port              = 80
   protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target_group_ip.arn
+  }
+}
+
+resource "aws_lb_listener" "listener_https" {
+  load_balancer_arn = aws_lb.load_balancer.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.wildcard_acm_cert_eu_west_2
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.target_group_ip.arn

@@ -27,6 +27,13 @@ graph TD;
     H[Source Files] --> S;
 ```
 
+| URL | Environment | Notes |
+| --- | ----------- | ----- |
+| http://dev-kosli-cf.grahamandsarah.com | Dev | Cloudfront distribution, plain-text |
+| https://dev-kosli-cf.grahamandsarah.com | Dev | Cloudfront distribution, TLS |
+| http://test-kosli-cf.grahamandsarah.com | Test | Cloudfront distribution, plain-text |
+| https://test-kosli-cf.grahamandsarah.com | Test | Cloudfront distribution, TLS |
+
 ## ECS
 
 Within the ECS solution, the source files are built into a container image that is 
@@ -47,6 +54,14 @@ graph TD;
     T --runs--> I[Container Image];
     H[Source Files] --built into --> I;
 ```
+
+| URL | Environment | Notes |
+| --- | ----------- | ----- |
+| http://dev-kosli-app.grahamandsarah.com | Dev | ECS-deployed application, plain-text |
+| https://dev-kosli-app.grahamandsarah.com | Dev | ECS-deployed application, TLS |
+| http://test-kosli-app.grahamandsarah.com | Test | ECS-deployed application, plain-text |
+| https://test-kosli-app.grahamandsarah.com | Test | ECS-deployed application, TLS |
+
 
 ## Points of interest
 
