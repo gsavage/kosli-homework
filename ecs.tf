@@ -91,14 +91,49 @@ resource "aws_cloudwatch_log_group" "app_logs" {
   retention_in_days = 3 # I don't need a lot of logs for testing this app
 }
 
+resource "aws_security_group" "service_sg" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = "${var.env}-app-sg"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "service_ingress" {
+  security_group_id            = aws_security_group.service_sg.id
+  referenced_security_group_id = aws_security_group.lb_sg.id
+  from_port                    = 80
+  to_port                      = 80
+  ip_protocol                  = "tcp"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "service_vpc_ingress" {
+  security_group_id            = aws_security_group.service_sg.id
+  referenced_security_group_id = aws_vpc.main.default_security_group_id
+  ip_protocol                  = "-1"
+}
+
+resource "aws_vpc_security_group_ingress_rule" "default_from_service_ingress" {
+  referenced_security_group_id = aws_security_group.service_sg.id
+  security_group_id            = aws_vpc.main.default_security_group_id
+  ip_protocol                  = "-1"
+}
+
+resource "aws_vpc_security_group_egress_rule" "service_egress" {
+  security_group_id = aws_security_group.service_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
+}
+
 resource "aws_ecs_service" "nginx_service" {
+  count           = 1
   name            = "kosli-${var.env}-nginx-service"
   cluster         = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.app_task.arn
   desired_count   = 1
   launch_type     = "FARGATE"
   network_configuration {
-    subnets = [aws_subnet.a.id, aws_subnet.b.id]
+    subnets         = [aws_subnet.a.id, aws_subnet.b.id]
+    security_groups = [aws_security_group.service_sg.id]
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.target_group_ip.arn
