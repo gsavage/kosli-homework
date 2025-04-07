@@ -34,6 +34,8 @@ graph TD;
 | http://test-kosli-cf.grahamandsarah.com | Test | Cloudfront distribution, plain-text |
 | https://test-kosli-cf.grahamandsarah.com | Test | Cloudfront distribution, TLS |
 
+_Note: Some browsers will attempt to get the https version when you click the http link - e.g. Safari on MacOS_
+
 ## ECS
 
 Within the ECS solution, the source files are built into a container image that is 
@@ -62,6 +64,7 @@ graph TD;
 | http://test-kosli-app.grahamandsarah.com | Test | ECS-deployed application, plain-text |
 | https://test-kosli-app.grahamandsarah.com | Test | ECS-deployed application, TLS |
 
+_Note: Some browsers will attempt to get the https version when you click the http link - e.g. Safari on MacOS_
 
 ## Points of interest
 
@@ -72,6 +75,10 @@ but this sort of thing, protecting our IP, is something that I feel very strongl
 
 I haven't implemented them in Terraform here, but this account is my personal account and I do
 have billing alerts setup. Please don't run siege or ab against these endpoints!  
+
+I did not use GenAI to build any of this.  I did click the Amazon Q icon once to help diagnose
+a problem pulling from an ECR, but all it did was point me at a page of documentation.
+
 
 ## Further Work
 
