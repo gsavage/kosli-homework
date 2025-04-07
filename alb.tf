@@ -46,7 +46,7 @@ resource "aws_lb_target_group" "target_group_ip" {
   deregistration_delay = 5
 }
 
-resource "aws_lb_listener" "listener" {
+resource "aws_lb_listener" "listener_http" {
   load_balancer_arn = aws_lb.load_balancer.arn
   port              = 80
   protocol          = "HTTP"
@@ -54,5 +54,4 @@ resource "aws_lb_listener" "listener" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.target_group_ip.arn
   }
-
 }
