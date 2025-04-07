@@ -69,6 +69,7 @@ _Note: Some browsers will attempt to get the https version when you click the ht
 ## Assessment Against Requirements
 
 | Requirement | Assessment |
+| ----------- | ---------- |
 | You should provision all necessary infra using Terraform. | Yes, everything _except_ the wildcart TLS cert |
 | You should not store Terraform state locally. Pick any supported backend. | State stored in S3 |
 | Changes to HTML should cause redeployment. | This implies some sort of CI? Updating the HTML and running terraform apply would redeploy it.  In the ECS world it's a little more messy|
@@ -114,4 +115,9 @@ There are a number of opportunities to improve these implementations.
 * I do not have a WAF in front of either the ALB or Cloudfront, again, this was for
   simplicity and to not stretch the brief too far.  There's no way I would put this into
   real production without those protections.
+
+* I've used no-ff merges so you can see how this has evolved, if you want to review the 
+  commit history.  This isn't how I prefer to work - I love rebase-onto-main and merge-ff 
+  however I know a lot of people like this merge bubbles, so I've left them in to help 
+  the reviewer.
 
