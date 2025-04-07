@@ -18,12 +18,14 @@ variable "aws_account" {
   type        = string
 }
 
-variable "wildcard_acm_cert" {
+# The Cert stored in us-east-1, suitable for use in Cloudfront
+variable "wildcard_acm_cert_global" {
   description = "Wildcard TLS cert for the grahamandsarah.com domain"
   type        = string
   default     = "arn:aws:acm:us-east-1:359024362939:certificate/f362f432-83e1-4427-91a6-2a1e484af485"
 }
 
+# The Cert stored in eu-west-2, suitable for use in an ALB
 variable "wildcard_acm_cert_eu_west_2" {
   description = "Wildcard TLS cert for the grahamandsarah.com domain"
   type        = string
@@ -40,5 +42,10 @@ variable "vpc_cidr_block" {
   description = "The CIDR block for the VPC"
   type        = string
   default     = "10.0.0.0/16"
+}
+
+variable "service_task_count" {
+  description = "How many copies of the app task should run in the service?"
+  type        = number
 }
 

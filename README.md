@@ -66,6 +66,18 @@ graph TD;
 
 _Note: Some browsers will attempt to get the https version when you click the http link - e.g. Safari on MacOS_
 
+## Assessment Against Requirements
+
+| Requirement | Assessment |
+| You should provision all necessary infra using Terraform. | Yes, everything _except_ the wildcart TLS cert |
+| You should not store Terraform state locally. Pick any supported backend. | State stored in S3 |
+| Changes to HTML should cause redeployment. | This implies some sort of CI? Updating the HTML and running terraform apply would redeploy it.  In the ECS world it's a little more messy|
+| DNS name or IP address should stay the same after redeployment | DNS supplied by the ALB and Cloudfront, so yes, they don't change.  CNAME in my personal domain points to the AWS domains |
+| TLS is optional | TLS implemented.  It would be odd to put something online without it! |
+| You should be able to deploy the same code into two different AWS accounts (think dev and prod). There should be a possibility to specify different parameters between accounts. For instance, the name of the ssh key if you are to go with EC2. | dev, test and production are configured.  The approach I've taken relies on having the right setup in your ~/.aws/config file. |
+| Please store Terraform code on GitHub and share a link to the repo with us. | https://github.com/gsavage/kosli-homework |
+| CI setup is optional. | I used terraform fmt and terraform validate as part of my local workflow, but yes, I didn't configure Github Actions for this repo |
+
 ## Points of interest
 
 I'm very aware of the need to implement good security practises.  I've chosen to run the ECS

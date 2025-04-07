@@ -25,7 +25,7 @@ There are many ways to serve websites on AWS. Your goal is to do research and pi
 - [x] Simulate having multiple AWS Account IDs - same account id, but make it a parameter...
 - [x] Create the bucket for holding the static content
 - [x] Create some static content
-- [ ] Build the ECS stack - cluster, service, task-definition, alb
+- [x] Build the ECS stack - cluster, service, task-definition, alb
 
 
 # Thoughts
